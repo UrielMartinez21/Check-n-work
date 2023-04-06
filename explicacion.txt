@@ -1,0 +1,8 @@
+-----------------| explicacion |-----------------
+La imagen se manda a una red neuronal entrenada para procesar las imagenes codificadas.
+Se generan 120 medidas diferentes en cada imagen, con estas medidas se pueden diferenciar personas.
+
+-----------------| Pasos |-----------------
+1. Cargar las imagenes
+2. Encontrar el rostro en las imagenes
+3. Codifificar el rostro de las imagenes
