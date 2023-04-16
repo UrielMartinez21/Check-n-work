@@ -11,7 +11,7 @@ def extraer_rostros():
     # --> Ubicacion de imagenes
     ruta_entrada = "entrada_imagenes"
 
-    #--> Carpeta sino existe
+    # --> Carpeta sino existe
     crear_carpeta("base_datos")
 
     # --> Detector facial
