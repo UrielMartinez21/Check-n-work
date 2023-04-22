@@ -1,12 +1,14 @@
 import tkinter
-from PIL import ImageTk,Image
+from PIL import ImageTk, Image
 import os
 import cv2
 import numpy as np
 import face_recognition
-from paquetes.funciones import crear_carpeta,codificar_datos,tomar_asistencia
+from paquetes.funciones import crear_carpeta, codificar_datos, tomar_asistencia
 
 """Funciones"""
+
+
 def extraer_rostros():
     # --> Ubicacion de imagenes
     ruta_entrada = "entrada_imagenes"
@@ -31,7 +33,7 @@ def extraer_rostros():
         rostros = clasificador_rostros.detectMultiScale(imagen, 1.1, 5)
         for (x, y, w, h) in rostros:
             # --> Comprobar deteccion de rostro
-            cv2.rectangle(ver_imagen, (x, y), (x+w, y+h), (0, 255, 0), 2)
+            cv2.rectangle(ver_imagen, (x, y), (x + w, y + h), (0, 255, 0), 2)
             # --> Rostro en base en ancho y alto
             rostro = imagen[y:y + h, x:x + w]
             # --> Redimencionar imagen a 200 px
@@ -48,6 +50,7 @@ def extraer_rostros():
 
     # --> Destruir ventanas creadas
     cv2.destroyAllWindows()
+
 
 def reconocer_rostros():
     # --> Ubicacion de imagenes
@@ -96,14 +99,14 @@ def reconocer_rostros():
 
             # --> Medidas de rostro
             y1, x2, y2, x1 = rostro_ubicado
-            y1, x2, y2, x1 = y1*4, x2*4, y2*4, x1*4
+            y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
             # --> Cubrir rostros
-            cv2.rectangle(img, (x1, y1), (x2, y2), color , 2)
-            cv2.rectangle(img, (x1, y2-35), (x2, y2), color , cv2.FILLED)
+            cv2.rectangle(img, (x1, y1), (x2, y2), color, 2)
+            cv2.rectangle(img, (x1, y2 - 35), (x2, y2), color, cv2.FILLED)
             cv2.putText(
                 img,
                 nombre,
-                (x1+6, y2-6),
+                (x1 + 6, y2 - 6),
                 cv2.FONT_HERSHEY_COMPLEX,
                 1,
                 (255, 255, 255),
@@ -121,6 +124,7 @@ def reconocer_rostros():
     # --> Se destruyen las ventanas que se crearon
     cv2.destroyAllWindows()
 
+
 def revisar_asistencia():
     os.system("start EXCEL.EXE asistencia/asistencia.csv")
 
@@ -133,23 +137,25 @@ ventana.iconbitmap("icono/icono.ico")
 ventana.config(bg="white")
 
 """Contenido de ventana"""
-#--> Crear botones
-boton_extraer_rostros = tkinter.Button(ventana,text="Extraer rostros",fg="white",bg="green",font="bold",command=extraer_rostros)
-boton_tomar_asistencia = tkinter.Button(ventana,text="Tomar asistencia",fg="white",bg="green",font="bold",command=reconocer_rostros)
-boton_revisar_asistencia = tkinter.Button(ventana,text="Revisar asistencia",fg="white",bg="green",font="bold",command=revisar_asistencia)
-boton_salir = tkinter.Button(ventana,text="Salir",fg="white",bg="red",font="bold",command=ventana.quit)
+# --> Crear botones
+boton_extraer_rostros = tkinter.Button(
+    ventana, text="Extraer rostros", fg="white", bg="green", font="bold", command=extraer_rostros)
+boton_tomar_asistencia = tkinter.Button(
+    ventana, text="Tomar asistencia", fg="white", bg="green", font="bold", command=reconocer_rostros)
+boton_revisar_asistencia = tkinter.Button(
+    ventana, text="Revisar asistencia", fg="white", bg="green", font="bold", command=revisar_asistencia)
+boton_salir = tkinter.Button(ventana, text="Salir", fg="white", bg="red", font="bold", command=ventana.quit)
 
-#--> Ubicar botones
-boton_extraer_rostros.place(relx=0.1694,rely=0.4625,relwidth=0.6610,relheight=0.0833)
-boton_tomar_asistencia.place(relx=0.1694,rely=0.5791,relwidth=0.6610,relheight=0.0833)
-boton_revisar_asistencia.place(relx=0.1694,rely=0.6958,relwidth=0.6610,relheight=0.0833)
-boton_salir.place(relx=0.1694,rely=0.8125,relwidth=0.6610,relheight=0.0833)
+# --> Ubicar botones
+boton_extraer_rostros.place(relx=0.1694, rely=0.4625, relwidth=0.6610, relheight=0.0833)
+boton_tomar_asistencia.place(relx=0.1694, rely=0.5791, relwidth=0.6610, relheight=0.0833)
+boton_revisar_asistencia.place(relx=0.1694, rely=0.6958, relwidth=0.6610, relheight=0.0833)
+boton_salir.place(relx=0.1694, rely=0.8125, relwidth=0.6610, relheight=0.0833)
 
-
-#--> Icono en pantalla
+# --> Icono en pantalla
 imagen_logo = ImageTk.PhotoImage(Image.open("icono/icono.ico"))
 label_imagen = tkinter.Label(image=imagen_logo)
-label_imagen.place(relx=0.1694,rely=0.1041,relwidth=0.6610,relheight=0.325)
+label_imagen.place(relx=0.1694, rely=0.1041, relwidth=0.6610, relheight=0.325)
 
 """Ejecutar ventana"""
 ventana.mainloop()
