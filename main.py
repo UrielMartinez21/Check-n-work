@@ -129,6 +129,7 @@ def revisar_asistencia():
     os.system("start EXCEL.EXE asistencia/asistencia.csv")
 
 
+# --> Inicio de interfaz
 """Configuracion de ventana"""
 ventana = tkinter.Tk()
 ventana.geometry("295x600")
