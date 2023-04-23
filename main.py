@@ -128,7 +128,7 @@ def reconocer_rostros_entrada():
 
 def reconocer_rostros_salida():
     # --> Revisar asistencia de entrada
-    registro_asistencia = pd.read_csv(r"asistencia/entrada.csv")
+    registro_asistencia = pd.read_csv(r"asistencia/asistencia.csv")
     nombres_entrada = registro_asistencia.iloc[:, 0].values
 
     # --> Ubicacion de imagenes
@@ -168,15 +168,14 @@ def reconocer_rostros_salida():
             # --> Encontrar menor distancia
             indice_coincide = np.argmin(distancia_rostros)
             if coincidencia[indice_coincide]:
-                # color = (125, 220, 0)
-                # nombre_detectado = nombre_clases[indice_coincide].title()
+                # --> Si usuario hizo 'CheckIn'
                 if nombre_clases[indice_coincide].title() in nombres_entrada:
                     color = (125, 220, 0)
                     nombre = nombre_clases[indice_coincide].title()
                     tomar_asistencia_salida(nombre)
                 else:
                     color = (255, 0, 0)
-                    nombre = "Checkint"
+                    nombre = "Haz checkint"
             else:
                 nombre = "Desconocido"
                 color = (50, 50, 255)
@@ -184,6 +183,7 @@ def reconocer_rostros_salida():
             # --> Medidas de rostro
             y1, x2, y2, x1 = rostro_ubicado
             y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
+
             # --> Cubrir rostros
             cv2.rectangle(img, (x1, y1), (x2, y2), color, 2)
             cv2.rectangle(img, (x1, y2 - 35), (x2, y2), color, cv2.FILLED)
@@ -209,18 +209,14 @@ def reconocer_rostros_salida():
     cv2.destroyAllWindows()
 
 
-def revisar_asistencia_entrada():
-    os.system("start EXCEL.EXE asistencia/entrada.csv")
-
-
-def revisar_asistencia_salida():
-    os.system("start EXCEL.EXE asistencia/salida.csv")
+def revisar_asistencia():
+    os.system("start EXCEL.EXE asistencia/asistencia.csv")
 
 
 # --> Inicio de interfaz
 """Configuracion de ventana"""
 ventana = tkinter.Tk()
-ventana.geometry("800x600")
+ventana.geometry("600x600")
 ventana.title("Check n' work")
 ventana.iconbitmap("icono/icono.ico")
 ventana.config(bg="white")
@@ -236,31 +232,25 @@ boton_tomar_asistencia_entrada = tkinter.Button(
 boton_tomar_asistencia_salida = tkinter.Button(
     ventana, text="Asistencia salida", fg="white", bg="green", font="bold", command=reconocer_rostros_salida)
 
-boton_revisar_asistencia_entrada = tkinter.Button(
-    ventana, text="Revisar asistencia de entrada", fg="white", bg="green", font="bold",
-    command=revisar_asistencia_entrada)
-
-boton_revisar_asistencia_salida = tkinter.Button(
-    ventana, text="Revisar asistencia de salida", fg="white", bg="green", font="bold",
-    command=revisar_asistencia_salida)
+boton_revisar_asistencia = tkinter.Button(
+    ventana, text="Revisar asistencia", fg="white", bg="green", font="bold", command=revisar_asistencia)
 
 boton_salir = tkinter.Button(ventana, text="Salir", fg="white", bg="red", font="bold", command=ventana.quit)
 
-# --> Ubicar botones
-boton_extraer_rostros.place(relx=0.1694, rely=0.4625, relwidth=0.6610, relheight=0.0833)
+# --> Ubicar botones en interfaz
+boton_extraer_rostros.place(relx=0.275, rely=0.46375, relwidth=0.45, relheight=0.08)
 
-boton_tomar_asistencia_entrada.place(relx=0.1694, rely=0.5791, relwidth=0.6610, relheight=0.0833)
-boton_tomar_asistencia_salida.place()
+boton_tomar_asistencia_entrada.place(relx=0.10, rely=0.5825, relwidth=0.35, relheight=0.08)
+boton_tomar_asistencia_salida.place(relx=0.55, rely=0.5825, relwidth=0.35, relheight=0.08)
 
-boton_revisar_asistencia_entrada.place(relx=0.1694, rely=0.6958, relwidth=0.6610, relheight=0.0833)
-boton_revisar_asistencia_salida.place(relx=0.1694, rely=0.6958, relwidth=0.6610, relheight=0.0833)
+boton_revisar_asistencia.place(relx=0.275, rely=0.70125, relwidth=0.45, relheight=0.08)
 
-boton_salir.place(relx=0.1694, rely=0.8125, relwidth=0.6610, relheight=0.0833)
+boton_salir.place(relx=0.275, rely=0.82, relwidth=0.45, relheight=0.08)
 
 # --> Icono en pantalla
 imagen_logo = ImageTk.PhotoImage(Image.open("icono/icono.ico"))
 label_imagen = tkinter.Label(image=imagen_logo)
-label_imagen.place(relx=0.1694, rely=0.1041, relwidth=0.6610, relheight=0.325)
+label_imagen.place(relx=0.25, rely=0.1041, relwidth=0.50, relheight=0.325)
 
 """Ejecutar ventana"""
 ventana.mainloop()
