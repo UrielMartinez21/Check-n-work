@@ -23,10 +23,27 @@ def codificar_datos(lista_imagenes):
     return lista_codificaciones
 
 
-def tomar_asistencia(nombre):
-    """Registro de asistencia usuarios no revisados"""
+def tomar_asistencia_entrada(nombre):
+    """Registro de asistencia usuarios para entrar"""
 
-    with open("asistencia/asistencia.csv", "r+") as f:
+    with open("asistencia/entrada.csv", "r+") as f:
+        lista_informacion = f.readlines()
+        lista_nombres = []
+        # --> Nombres registrados en documento
+        for linea in lista_informacion:
+            entrada = linea.split(",")
+            lista_nombres.append(entrada[0])
+        # --> Validar si el nombre no tomo asistencia
+        if nombre not in lista_nombres:
+            fecha = datetime.now()
+            fecha_string = fecha.strftime("%H:%M:%S")
+            f.writelines(f"\n{nombre},{fecha_string}")
+
+
+def tomar_asistencia_salida(nombre):
+    """Registro de asistencia usuarios para entrar"""
+
+    with open("asistencia/salida.csv", "r+") as f:
         lista_informacion = f.readlines()
         lista_nombres = []
         # --> Nombres registrados en documento
