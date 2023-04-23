@@ -7,7 +7,6 @@ import pandas as pd
 import face_recognition
 from paquetes.funciones import crear_carpeta, codificar_datos, tomar_asistencia_entrada, tomar_asistencia_salida
 
-
 """Funciones"""
 
 
@@ -210,14 +209,18 @@ def reconocer_rostros_salida():
     cv2.destroyAllWindows()
 
 
-def revisar_asistencia():
-    os.system("start EXCEL.EXE asistencia/asistencia.csv")
+def revisar_asistencia_entrada():
+    os.system("start EXCEL.EXE asistencia/entrada.csv")
+
+
+def revisar_asistencia_salida():
+    os.system("start EXCEL.EXE asistencia/salida.csv")
 
 
 # --> Inicio de interfaz
 """Configuracion de ventana"""
 ventana = tkinter.Tk()
-ventana.geometry("295x600")
+ventana.geometry("800x600")
 ventana.title("Check n' work")
 ventana.iconbitmap("icono/icono.ico")
 ventana.config(bg="white")
@@ -233,16 +236,25 @@ boton_tomar_asistencia_entrada = tkinter.Button(
 boton_tomar_asistencia_salida = tkinter.Button(
     ventana, text="Asistencia salida", fg="white", bg="green", font="bold", command=reconocer_rostros_salida)
 
-boton_revisar_asistencia = tkinter.Button(
-    ventana, text="Revisar asistencia", fg="white", bg="green", font="bold", command=revisar_asistencia)
+boton_revisar_asistencia_entrada = tkinter.Button(
+    ventana, text="Revisar asistencia de entrada", fg="white", bg="green", font="bold",
+    command=revisar_asistencia_entrada)
 
-boton_salir = tkinter.Button(ventana, text="Salir", fg="white", bg="red", font="bold", command=reconocer_rostros_salida)
+boton_revisar_asistencia_salida = tkinter.Button(
+    ventana, text="Revisar asistencia de salida", fg="white", bg="green", font="bold",
+    command=revisar_asistencia_salida)
+
+boton_salir = tkinter.Button(ventana, text="Salir", fg="white", bg="red", font="bold", command=ventana.quit)
 
 # --> Ubicar botones
 boton_extraer_rostros.place(relx=0.1694, rely=0.4625, relwidth=0.6610, relheight=0.0833)
+
 boton_tomar_asistencia_entrada.place(relx=0.1694, rely=0.5791, relwidth=0.6610, relheight=0.0833)
 boton_tomar_asistencia_salida.place()
-boton_revisar_asistencia.place(relx=0.1694, rely=0.6958, relwidth=0.6610, relheight=0.0833)
+
+boton_revisar_asistencia_entrada.place(relx=0.1694, rely=0.6958, relwidth=0.6610, relheight=0.0833)
+boton_revisar_asistencia_salida.place(relx=0.1694, rely=0.6958, relwidth=0.6610, relheight=0.0833)
+
 boton_salir.place(relx=0.1694, rely=0.8125, relwidth=0.6610, relheight=0.0833)
 
 # --> Icono en pantalla
