@@ -11,6 +11,8 @@ from paquetes.funciones import crear_carpeta, codificar_datos, tomar_asistencia_
 
 
 def extraer_rostros():
+    """Extraer rostros de un banco de datos"""
+
     # --> Ubicacion de imagenes
     ruta_entrada = "entrada_imagenes"
 
@@ -54,6 +56,7 @@ def extraer_rostros():
 
 
 def reconocer_rostros_entrada():
+    """Compara rostros del banco de datos con la camara"""
     # --> Ubicacion de imagenes
     ruta_imagenes = 'base_datos'
 
