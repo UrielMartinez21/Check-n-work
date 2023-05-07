@@ -27,7 +27,7 @@ def codificar_datos(lista_imagenes):
 def tomar_asistencia_entrada(nombre):
     """Registro de asistencia usuarios para entrar"""
 
-    with open("asistencia/asistencia.csv", "r+") as f:
+    with open("../administrador/asistencia/asistencia.csv", "r+") as f:
         lista_informacion = f.readlines()
         lista_nombres = []
         # --> Nombres registrados en documento
@@ -44,7 +44,7 @@ def tomar_asistencia_entrada(nombre):
 def tomar_asistencia_salida(nombre):
     """Registro de asistencia usuarios para entrar"""
     # --> Validar que no haya checkout
-    registro_asistencia = pd.read_csv(r"asistencia/asistencia.csv")
+    registro_asistencia = pd.read_csv(r"../administrador/asistencia/asistencia.csv")
     registro = registro_asistencia[registro_asistencia["Nombre"] == nombre].values
     registro_salida = str(registro[0][2])
 
@@ -61,7 +61,7 @@ def tomar_asistencia_salida(nombre):
         datos = registro_asistencia.values
 
         # --> Sobreescribir archivo csv
-        with open("asistencia/asistencia.csv", "r+") as f:
+        with open("../administrador/asistencia/asistencia.csv", "r+") as f:
             f.write(f"Nombre,Entrada,Salida")
             for dato in datos:
                 f.writelines(f"\n{dato[0]},{dato[1]},{dato[2]}")

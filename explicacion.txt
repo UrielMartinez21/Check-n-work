@@ -6,3 +6,6 @@ Se generan 120 medidas diferentes en cada imagen, con estas medidas se pueden di
 1. Cargar las imagenes
 2. Encontrar el rostro en las imagenes
 3. Codifificar el rostro de las imagenes
+4. Guardar los rostros en una BD
+5. Comparar los rostros con la BD
+6. Mostrar si hay coincidencias o no

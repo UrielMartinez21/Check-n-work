@@ -5,60 +5,16 @@ import cv2
 import numpy as np
 import pandas as pd
 import face_recognition
-from paquetes.funciones import crear_carpeta, codificar_datos, tomar_asistencia_entrada, tomar_asistencia_salida
+from paquetes.funciones import codificar_datos, tomar_asistencia_entrada, tomar_asistencia_salida
+
 
 """Funciones"""
-
-
-def extraer_rostros():
-    """Extraer rostros de un banco de datos"""
-
-    # --> Ubicacion de imagenes
-    ruta_entrada = "entrada_imagenes"
-
-    # --> Carpeta sino existe
-    crear_carpeta("base_datos")
-
-    # --> Detector facial
-    clasificador_rostros = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-
-    # --> Nombre de los rostros
-    count = 0
-    # --> Leer imagenes
-    print("[+]Imagenes procesadas:")
-    for nombre_imagen in os.listdir(ruta_entrada):
-        print("\t-->", nombre_imagen)
-        # -->Ruta de imagen
-        imagen = cv2.imread(ruta_entrada + "/" + nombre_imagen)
-        ver_imagen = cv2.imread(ruta_entrada + "/" + nombre_imagen)
-
-        # --> Deteccion de rostros
-        rostros = clasificador_rostros.detectMultiScale(imagen, 1.1, 5)
-        for (x, y, w, h) in rostros:
-            # --> Comprobar deteccion de rostro
-            cv2.rectangle(ver_imagen, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            # --> Rostro en base en ancho y alto
-            rostro = imagen[y:y + h, x:x + w]
-            # --> Redimencionar imagen a 200 px
-            rostro = cv2.resize(rostro, (200, 200))
-
-            # --> Guardar imagen en 'base_datos'
-            cv2.imwrite("base_datos/" + str(count) + ".jpg", rostro)
-            count += 1
-
-            # --> Ver imagenes
-            cv2.imshow("Rostro", ver_imagen)
-            cv2.waitKey(0)
-    print("[+]Proceso terminado")
-
-    # --> Destruir ventanas creadas
-    cv2.destroyAllWindows()
 
 
 def reconocer_rostros_entrada():
     """Compara rostros del banco de datos con la camara"""
     # --> Ubicacion de imagenes
-    ruta_imagenes = 'base_datos'
+    ruta_imagenes = r'../administrador/base_datos'
 
     # --> Variables
     imagenes = []
@@ -131,11 +87,11 @@ def reconocer_rostros_entrada():
 
 def reconocer_rostros_salida():
     # --> Revisar asistencia de entrada
-    registro_asistencia = pd.read_csv(r"asistencia/asistencia.csv")
+    registro_asistencia = pd.read_csv(r"../administrador/asistencia/asistencia.csv")
     nombres_entrada = registro_asistencia.iloc[:, 0].values
 
     # --> Ubicacion de imagenes
-    ruta_imagenes = 'base_datos'
+    ruta_imagenes = r'../administrador/base_datos'
 
     # --> Variables
     imagenes = []
@@ -212,48 +168,42 @@ def reconocer_rostros_salida():
     cv2.destroyAllWindows()
 
 
-def revisar_asistencia():
-    os.system("start EXCEL.EXE asistencia/asistencia.csv")
-
-
 # --> Inicio de interfaz
+
 """Configuracion de ventana"""
 ventana = tkinter.Tk()
-ventana.geometry("600x600")
-ventana.title("Check n' work")
-ventana.iconbitmap("icono/icono.ico")
+ventana.geometry("500x600")
+ventana.title("Check n' work - Usuario")
+ventana.iconbitmap("../icono/icono.ico")
 ventana.config(bg="white")
 
 """Contenido de ventana"""
-# --> Crear botones
-boton_extraer_rostros = tkinter.Button(
-    ventana, text="Extraer rostros", fg="white", bg="green", font="bold", command=extraer_rostros)
 
-boton_tomar_asistencia_entrada = tkinter.Button(
+# --> Titulos
+nombre_ventana = tkinter.Label(text="Usuario", bg="white", font="bold")
+
+# --> Crear botones
+boton_asistencia_entrada = tkinter.Button(
     ventana, text="Asistencia entrada", fg="white", bg="green", font="bold", command=reconocer_rostros_entrada)
 
-boton_tomar_asistencia_salida = tkinter.Button(
+boton_asistencia_salida = tkinter.Button(
     ventana, text="Asistencia salida", fg="white", bg="green", font="bold", command=reconocer_rostros_salida)
-
-boton_revisar_asistencia = tkinter.Button(
-    ventana, text="Revisar asistencia", fg="white", bg="green", font="bold", command=revisar_asistencia)
 
 boton_salir = tkinter.Button(ventana, text="Salir", fg="white", bg="red", font="bold", command=ventana.quit)
 
+# --> Ubicar titulos en interfaz
+nombre_ventana.place(relx=0.25, rely=0.48, relwidth=0.50, relheight=0.05)
+
 # --> Ubicar botones en interfaz
-boton_extraer_rostros.place(relx=0.275, rely=0.46375, relwidth=0.45, relheight=0.08)
-
-boton_tomar_asistencia_entrada.place(relx=0.10, rely=0.5825, relwidth=0.35, relheight=0.08)
-boton_tomar_asistencia_salida.place(relx=0.55, rely=0.5825, relwidth=0.35, relheight=0.08)
-
-boton_revisar_asistencia.place(relx=0.275, rely=0.70125, relwidth=0.45, relheight=0.08)
-
-boton_salir.place(relx=0.275, rely=0.82, relwidth=0.45, relheight=0.08)
+boton_asistencia_entrada.place(relx=0.10, rely=0.63, relwidth=0.35, relheight=0.08)
+boton_asistencia_salida.place(relx=0.55, rely=0.63, relwidth=0.35, relheight=0.08)
+#
+boton_salir.place(relx=0.275, rely=0.81, relwidth=0.45, relheight=0.08)
 
 # --> Icono en pantalla
-imagen_logo = ImageTk.PhotoImage(Image.open("icono/icono.ico"))
+imagen_logo = ImageTk.PhotoImage(Image.open("../icono/icono.ico"))
 label_imagen = tkinter.Label(image=imagen_logo)
-label_imagen.place(relx=0.25, rely=0.1041, relwidth=0.50, relheight=0.325)
+label_imagen.place(relx=0.25, rely=0.11, relwidth=0.50, relheight=0.32)
 
 """Ejecutar ventana"""
 ventana.mainloop()
