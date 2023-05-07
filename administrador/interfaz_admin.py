@@ -1,4 +1,5 @@
 import tkinter
+from tkinter import filedialog
 from PIL import ImageTk, Image
 import os
 import cv2
@@ -52,6 +53,54 @@ def extraer_rostros():
     cv2.destroyAllWindows()
 
 
+def reconocimiento_docente():
+    """Reconocimiento individual de cada persona"""
+
+    # --> Definir formatos compatibles
+    ruta_imagen = filedialog.askopenfilename(filetypes=[
+        ("image", ".jpeg"),
+        ("image", ".png"),
+        ("image", ".jpg")])
+
+    # print(ruta_imagen)
+    nombre_imagen = ruta_imagen.split("/")[-1].split(".")[0]
+    # print(nombre_imagen)
+
+    # --> Carpeta sino existe
+    crear_carpeta("base_datos")
+
+    # --> Detector facial
+    clasificador_rostros = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+
+    # print("\t-->", nombre_imagen)
+    # -->Ruta de imagen
+    imagen = cv2.imread(ruta_imagen)
+    ver_imagen = cv2.imread(ruta_imagen)
+
+    # --> Deteccion de rostros
+    rostros = clasificador_rostros.detectMultiScale(imagen, 1.1, 5)
+    for (x, y, w, h) in rostros:
+        # --> Comprobar deteccion de rostro
+        cv2.rectangle(ver_imagen, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        # --> Rostro en base en ancho y alto
+        rostro = imagen[y:y + h, x:x + w]
+        # --> Redimencionar imagen a 200 px
+        rostro = cv2.resize(rostro, (200, 200))
+
+        # --> Guardar imagen en 'base_datos'
+        cv2.imwrite("base_datos/" + str(nombre_imagen) + ".jpg", rostro)
+        # count += 1
+
+        # --> Ver imagenes
+        cv2.imshow("Rostro", ver_imagen)
+        cv2.waitKey(0)
+
+    print("[+]Proceso terminado")
+
+    # --> Destruir ventanas creadas
+    cv2.destroyAllWindows()
+
+
 def revisar_asistencia():
     os.system("start EXCEL.EXE asistencia/asistencia.csv")
 
@@ -74,7 +123,8 @@ nombre_ventana = tkinter.Label(text="Administrador", bg="white", font="bold")
 boton_extraer_rostros = tkinter.Button(
     ventana, text="Extraer rostros", fg="white", bg="green", font="bold", command=extraer_rostros)
 
-boton_extraer_uno = tkinter.Button(ventana, text="+", fg="white", bg="green", font="bold")
+boton_extraer_uno = tkinter.Button(
+    ventana, text="+", fg="white", bg="green", font="bold", command=reconocimiento_docente)
 
 boton_revisar_asistencia = tkinter.Button(
     ventana, text="Revisar asistencia", fg="white", bg="green", font="bold", command=revisar_asistencia)
