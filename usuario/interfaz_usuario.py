@@ -8,6 +8,7 @@ import face_recognition
 from paquetes.funciones import codificar_datos, tomar_asistencia_entrada, tomar_asistencia_salida
 
 
+
 """Funciones"""
 
 
