@@ -175,7 +175,7 @@ def reconocer_rostros_salida():
 ventana = tkinter.Tk()
 ventana.geometry("500x600")
 ventana.title("Check n' work - Usuario")
-ventana.iconbitmap("../icono/logo_definitivo.ico")
+ventana.iconbitmap("icono/logo_definitivo.ico")
 ventana.config(bg="white")
 
 """Contenido de ventana"""
@@ -202,7 +202,7 @@ boton_asistencia_salida.place(relx=0.55, rely=0.63, relwidth=0.35, relheight=0.0
 boton_salir.place(relx=0.275, rely=0.81, relwidth=0.45, relheight=0.08)
 
 # --> Icono en pantalla
-imagen_logo = ImageTk.PhotoImage(Image.open("../icono/logo_definitivo.ico"))
+imagen_logo = ImageTk.PhotoImage(Image.open("icono/logo_definitivo.ico"))
 label_imagen = tkinter.Label(image=imagen_logo)
 label_imagen.place(relx=0.25, rely=0.11, relwidth=0.50, relheight=0.32)
 
