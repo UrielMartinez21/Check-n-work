@@ -1,0 +1,11 @@
+# Ignore all cache fiels
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+venv/
+env/
+.idea/
+.vscode/
