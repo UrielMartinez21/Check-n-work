@@ -2,11 +2,11 @@ import cv2
 import face_recognition
 
 # --> Preparar imagenes
-img_uriel = face_recognition.load_image_file('imagenes/uriel_prueba.jpg')
+img_uriel = face_recognition.load_image_file('images/uriel_prueba.jpg')
 img_uriel = cv2.cvtColor(img_uriel, cv2.COLOR_BGR2RGB)
 
 
-img_test = face_recognition.load_image_file('imagenes/uriel_lentes.jpg')
+img_test = face_recognition.load_image_file('images/uriel_lentes.jpg')
 img_test = cv2.cvtColor(img_test, cv2.COLOR_BGR2RGB)
 
 # --> Encontrar y codificar rostro
