@@ -3,7 +3,7 @@ from tkinter import filedialog
 from PIL import ImageTk, Image
 import os
 import cv2
-from paquetes.funciones import crear_carpeta
+from packages.funciones import crear_carpeta
 
 """Funciones"""
 

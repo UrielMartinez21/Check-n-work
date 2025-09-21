@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 import pandas as pd
 import face_recognition
-from paquetes.funciones import codificar_datos, tomar_asistencia_entrada, tomar_asistencia_salida
+from packages.funciones import codificar_datos, tomar_asistencia_entrada, tomar_asistencia_salida
 
 
 
